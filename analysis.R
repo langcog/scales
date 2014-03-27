@@ -71,7 +71,7 @@ ms$cil <- aggregate(correct ~ age.grp + condition + expt,data=mss,ci.low)$correc
 
 quartz()
 qplot(age.grp, correct, ymax=correct+cih,ymin=correct-cil,
-      colour=condition,
+      colour=condition,lty=expt,
       position=position_dodge(width=.1),
       geom=c("line","pointrange"),
       data=ms) +
@@ -95,12 +95,13 @@ qplot(age.grp, correct, ymax=correct+cih,ymin=correct-cil,
   facet_wrap(~trial) + 
   geom_hline(yintercept=.5,lty=2)
 
+
+
 ###### models ######
 mod1 <- glmer(correct ~ age * condition + (1 | id) + (1 | trial), 
               family="binomial",data=d)
 summary(mod1)
 ranef(mod1)
-
 
 # experiment effect
 summary(glmer(correct ~ age * condition * expt + (1 | id) + (1 | trial), 

@@ -98,3 +98,8 @@ summary(glmer(correct ~ factor(age.grp) + (1 | id) + (1 | trial),
 
 summary(glmer(correct ~ factor(age.grp) + (1 | id) + (1 | trial), 
               family="binomial",data=subset(d,foil==FALSE & condition=="No Label")))
+
+d.relevel <- d
+d$condition <- factor(d$condition, levels=c("No Label","Label"))
+summary(glmer(correct ~ factor(age.grp) * condition - condition + (1 | id) + (1 | trial), 
+              family="binomial",data=subset(d,foil==FALSE)))
